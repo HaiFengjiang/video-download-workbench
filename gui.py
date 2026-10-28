@@ -19,6 +19,7 @@ import i18n
 FONT = "Microsoft YaHei UI"
 MONO = "Consolas"
 GITHUB_URL = "https://github.com/yt-dlp/yt-dlp"
+PROJECT_URL = "https://github.com/HaiFengjiang/yt-dlp-ui"
 ASSETS_DIR = core.BASE_DIR / "assets"
 
 FILTER_CODES = ("all", "done", "error", "canceled")
@@ -1536,6 +1537,7 @@ class App:
             self.t("about_ytdlp"),
             self.t("about_text"),
             (self.t("about_github"), lambda: self.open_link(GITHUB_URL)),
+            link=(self.t("about_project"), PROJECT_URL),
         )
 
     def open_donation(self, parent, method: str = "alipay") -> None:
@@ -1641,7 +1643,7 @@ class App:
     def open_privacy(self, parent) -> None:
         self._show_info(parent, self.t("privacy"), self.t("privacy_text"))
 
-    def _show_info(self, parent, title: str, body: str, action=None) -> None:
+    def _show_info(self, parent, title: str, body: str, action=None, link=None) -> None:
         c = self.theme
         dialog = tk.Toplevel(parent)
         dialog.title(title)
@@ -1664,6 +1666,26 @@ class App:
             anchor="w",
             wraplength=440,
         ).pack(fill="x", pady=(12, 0))
+
+        if link is not None:
+            prefix, url = link
+            link_row = tk.Frame(wrap, bg=c["panel"])
+            link_row.pack(fill="x", pady=(10, 0))
+            tk.Label(
+                link_row, text=prefix, bg=c["panel"], fg=c["muted"], font=(FONT, 10)
+            ).pack(side="left")
+            anchor = tk.Label(
+                link_row,
+                text=url,
+                bg=c["panel"],
+                fg=c["accent"],
+                font=(FONT, 10, "underline"),
+                cursor="hand2",
+            )
+            anchor.pack(side="left")
+            anchor.bind("<Button-1>", lambda event: self.open_link(url))
+            anchor.bind("<Enter>", lambda event: anchor.config(fg=c["accent_hover"]))
+            anchor.bind("<Leave>", lambda event: anchor.config(fg=c["accent"]))
 
         row = tk.Frame(wrap, bg=c["panel"])
         row.pack(fill="x", pady=(20, 0))
