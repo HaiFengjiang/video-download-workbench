@@ -18,7 +18,6 @@ import i18n
 
 FONT = "Microsoft YaHei UI"
 MONO = "Consolas"
-GITHUB_URL = "https://github.com/yt-dlp/yt-dlp"
 PROJECT_URL = "https://github.com/HaiFengjiang/yt-dlp-ui"
 ASSETS_DIR = core.BASE_DIR / "assets"
 
@@ -1536,7 +1535,7 @@ class App:
             parent,
             self.t("about_ytdlp"),
             self.t("about_text"),
-            (self.t("about_github"), lambda: self.open_link(GITHUB_URL)),
+            (self.t("about_github"), lambda: self.open_link(PROJECT_URL)),
             link=(self.t("about_project"), PROJECT_URL),
         )
 
