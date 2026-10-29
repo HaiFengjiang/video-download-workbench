@@ -118,6 +118,24 @@ def find_ytdlp() -> str:
     return found or "yt-dlp"
 
 
+LOCAL_TOOLS = ("yt-dlp.exe", "yt-dlp", "ffmpeg.exe", "ffmpeg")
+
+
+def ensure_local_bin_path() -> None:
+    """把含 yt-dlp / ffmpeg 的程序目录加入当前进程 PATH，无需修改系统环境变量。"""
+    path = os.environ.get("PATH", "")
+    parts = path.split(os.pathsep)
+    for directory in (BASE_DIR, BASE_DIR.parent):
+        try:
+            if not any((directory / name).is_file() for name in LOCAL_TOOLS):
+                continue
+        except OSError:
+            continue
+        if str(directory) not in parts:
+            parts.insert(0, str(directory))
+    os.environ["PATH"] = os.pathsep.join(parts)
+
+
 def build_args(output_dir: str, preset: str, playlist: bool) -> list[str]:
     args = [
         "--newline",
@@ -192,6 +210,7 @@ class Manager:
         self.version = 0
         self.history_version = 0
         self.procs: dict[str, subprocess.Popen] = {}
+        ensure_local_bin_path()
         self.ytdlp = find_ytdlp()
         self.ytdlp_version = probe_version(self.ytdlp)
         self.ffmpeg = bool(shutil.which("ffmpeg"))
