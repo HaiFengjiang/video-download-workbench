@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""yt-dlp 工作台核心：任务队列与下载引擎（仅使用 Python 标准库）。"""
+"""视频下载工具台核心：任务队列与下载引擎（仅使用 Python 标准库）。"""
 
 from __future__ import annotations
 
@@ -439,7 +439,7 @@ class Manager:
                     path = (BASE_DIR / path).resolve()
                 try:
                     path.mkdir(parents=True, exist_ok=True)
-                    probe = path / ".ytdlp-workbench-test"
+                    probe = path / ".video-download-workbench-test"
                     probe.write_text("ok", encoding="utf-8")
                     probe.unlink(missing_ok=True)
                 except Exception as exc:

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""yt-dlp 工作台桌面版：轻量 tkinter 界面（仅使用 Python 标准库）。"""
+"""视频下载工具台桌面版：轻量 tkinter 界面（仅使用 Python 标准库）。"""
 
 from __future__ import annotations
 
@@ -18,7 +18,7 @@ import i18n
 
 FONT = "Microsoft YaHei UI"
 MONO = "Consolas"
-PROJECT_URL = "https://github.com/HaiFengjiang/yt-dlp-ui"
+PROJECT_URL = "https://github.com/HaiFengjiang/video-download-workbench"
 UPSTREAM_URL = "https://github.com/yt-dlp/yt-dlp"
 AFDIAN_URL = "https://afdian.com/a/sea27378/plan"
 

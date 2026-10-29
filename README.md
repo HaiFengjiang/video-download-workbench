@@ -1,6 +1,6 @@
-# yt-dlp UI
+# 视频下载工具台
 
-基于 [yt-dlp](https://github.com/yt-dlp/yt-dlp) 的桌面图形界面。项目参考 GitHub 上的 yt-dlp，在此基础上设计全新的 UI，帮助不熟悉命令行操作的用户下载主流媒体平台的视频与音频。界面使用 Python 标准库 tkinter 构建，无需安装额外依赖。
+视频下载工具台是基于 [yt-dlp](https://github.com/yt-dlp/yt-dlp) 的桌面图形界面。在此基础上设计全新的 UI，帮助不熟悉命令行操作的用户下载主流媒体平台的视频与音频。界面使用 Python 标准库 tkinter 构建，无需安装额外依赖。
 
 ## 功能
 
@@ -12,7 +12,7 @@
 - 界面语言：中文、English、日本語、한국어
 - 进度动画开关、下载完成提示音（4 种可选，支持试听）
 - 主界面直接更改保存位置
-- 关于 yt-dlp、隐私政策，以及爱发电捐赠入口
+- 关于视频下载工具台、隐私政策，以及爱发电捐赠入口
 
 ## 环境要求
 
@@ -25,7 +25,7 @@
 1. 获取代码：
 
    ```bash
-   git clone https://github.com/HaiFengjiang/yt-dlp-ui.git
+   git clone https://github.com/HaiFengjiang/video-download-workbench.git
    ```
 
 2. 将 `yt-dlp.exe` 放入项目目录，或确保它已在 `PATH` 中。
