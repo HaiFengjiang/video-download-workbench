@@ -2,3 +2,7 @@ __pycache__/
 *.py[cod]
 data/
 downloads/
+build/
+dist/
+*.spec
+release/

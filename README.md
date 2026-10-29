@@ -14,7 +14,15 @@
 - 主界面直接更改保存位置
 - 关于视频下载工具台、隐私政策，以及爱发电捐赠入口
 
-## 环境要求
+## 直接使用（Windows 免安装）
+
+1. 在 [Releases](https://github.com/HaiFengjiang/video-download-workbench/releases) 下载 `VideoDownloadWorkbench-v1.0.0-win64.zip` 并解压
+2. 将 `yt-dlp.exe`（可从 [yt-dlp Releases](https://github.com/yt-dlp/yt-dlp/releases) 获取）放到同一目录，建议同时放入 `ffmpeg.exe`
+3. 双击 `VideoDownloadWorkbench.exe` 启动
+
+## 源码运行要求
+
+以下要求仅针对源码运行，免安装版无需安装 Python。
 
 - Windows，Python 3.9 或更高版本
 - 已安装 [yt-dlp](https://github.com/yt-dlp/yt-dlp)，将 `yt-dlp.exe` 放在项目根目录或加入 `PATH`
