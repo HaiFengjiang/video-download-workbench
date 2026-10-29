@@ -1570,9 +1570,9 @@ class App:
                 cursor="hand2",
             )
             anchor.pack(side="left")
-            anchor.bind("<Button-1>", lambda event: self.open_link(url))
-            anchor.bind("<Enter>", lambda event: anchor.config(fg=c["accent_hover"]))
-            anchor.bind("<Leave>", lambda event: anchor.config(fg=c["accent"]))
+            anchor.bind("<Button-1>", lambda event, target=url: self.open_link(target))
+            anchor.bind("<Enter>", lambda event, widget=anchor: widget.config(fg=c["accent_hover"]))
+            anchor.bind("<Leave>", lambda event, widget=anchor: widget.config(fg=c["accent"]))
 
         row = tk.Frame(wrap, bg=c["panel"])
         row.pack(fill="x", pady=(20, 0))
