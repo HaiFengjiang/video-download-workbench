@@ -25,6 +25,7 @@ DATA_DIR = BASE_DIR / "data"
 CONFIG_FILE = DATA_DIR / "config.json"
 STATE_FILE = DATA_DIR / "tasks.json"
 DEFAULT_OUTPUT = BASE_DIR / "downloads"
+APP_VERSION = "1.0.1"
 
 # 界面设置可选项
 LANGUAGES = ("zh", "en", "ja", "ko")

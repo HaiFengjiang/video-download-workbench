@@ -1453,6 +1453,27 @@ class App:
             [(self.t("open"), lambda: self.open_privacy(dialog))],
         )
 
+        section(self.t("version_info"), (18, 6))
+        version_box = tk.Frame(wrap, bg=c["card"], highlightthickness=1, highlightbackground=c["border"])
+        version_box.pack(fill="x")
+
+        def version_row(label_text, value_text, first=False):
+            if not first:
+                tk.Frame(version_box, bg=c["border"], height=1).pack(fill="x")
+            row = tk.Frame(version_box, bg=c["card"])
+            row.pack(fill="x", padx=14, pady=9)
+            tk.Label(row, text=label_text, bg=c["card"], fg=c["text"], font=(FONT, 10)).pack(
+                side="left"
+            )
+            tk.Label(row, text=value_text, bg=c["card"], fg=c["muted"], font=(FONT, 10)).pack(
+                side="right"
+            )
+
+        version_row(self.t("app_version"), core.APP_VERSION, first=True)
+        version_row(
+            self.t("ytdlp_version"), self.manager.ytdlp_version or self.t("not_detected")
+        )
+
         def save() -> None:
             try:
                 concurrency = int(spin.get())

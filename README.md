@@ -16,7 +16,7 @@
 
 ## 直接使用（Windows 免安装）
 
-1. 在 [Releases](https://github.com/HaiFengjiang/video-download-workbench/releases) 下载 `VideoDownloadWorkbench-v1.0.0-win64.zip` 并解压
+1. 在 [Releases](https://github.com/HaiFengjiang/video-download-workbench/releases) 下载 `VideoDownloadWorkbench-v1.0.1-win64.zip` 并解压
 2. 将 `yt-dlp.exe`（可从 [yt-dlp Releases](https://github.com/yt-dlp/yt-dlp/releases) 获取）放到同一目录，建议同时放入 `ffmpeg.exe`
 3. 双击 `VideoDownloadWorkbench.exe` 启动
 
