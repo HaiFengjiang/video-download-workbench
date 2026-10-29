@@ -19,6 +19,7 @@ import i18n
 FONT = "Microsoft YaHei UI"
 MONO = "Consolas"
 PROJECT_URL = "https://github.com/HaiFengjiang/yt-dlp-ui"
+UPSTREAM_URL = "https://github.com/yt-dlp/yt-dlp"
 ASSETS_DIR = core.BASE_DIR / "assets"
 
 FILTER_CODES = ("all", "done", "error", "canceled")
@@ -1536,7 +1537,10 @@ class App:
             self.t("about_ytdlp"),
             self.t("about_text"),
             (self.t("about_github"), lambda: self.open_link(PROJECT_URL)),
-            link=(self.t("about_project"), PROJECT_URL),
+            links=(
+                (self.t("about_project"), PROJECT_URL),
+                (self.t("about_credits"), UPSTREAM_URL),
+            ),
         )
 
     def open_donation(self, parent, method: str = "alipay") -> None:
@@ -1642,7 +1646,7 @@ class App:
     def open_privacy(self, parent) -> None:
         self._show_info(parent, self.t("privacy"), self.t("privacy_text"))
 
-    def _show_info(self, parent, title: str, body: str, action=None, link=None) -> None:
+    def _show_info(self, parent, title: str, body: str, action=None, links=None) -> None:
         c = self.theme
         dialog = tk.Toplevel(parent)
         dialog.title(title)
@@ -1666,10 +1670,9 @@ class App:
             wraplength=440,
         ).pack(fill="x", pady=(12, 0))
 
-        if link is not None:
-            prefix, url = link
+        for prefix, url in links or ():
             link_row = tk.Frame(wrap, bg=c["panel"])
-            link_row.pack(fill="x", pady=(10, 0))
+            link_row.pack(fill="x", pady=(8, 0))
             tk.Label(
                 link_row, text=prefix, bg=c["panel"], fg=c["muted"], font=(FONT, 10)
             ).pack(side="left")
