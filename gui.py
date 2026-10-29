@@ -20,7 +20,7 @@ FONT = "Microsoft YaHei UI"
 MONO = "Consolas"
 PROJECT_URL = "https://github.com/HaiFengjiang/yt-dlp-ui"
 UPSTREAM_URL = "https://github.com/yt-dlp/yt-dlp"
-ASSETS_DIR = core.BASE_DIR / "assets"
+AFDIAN_URL = "https://afdian.com/a/sea27378/plan"
 
 FILTER_CODES = ("all", "done", "error", "canceled")
 
@@ -135,18 +135,6 @@ def play_sound(name: str) -> None:
                 pass
 
     threading.Thread(target=run, daemon=True, name="sound").start()
-
-
-def load_qr(path, max_height: int):
-    """读取二维码图片，超出可用高度时按整数倍缩小，保证仍可扫描。"""
-    try:
-        image = tk.PhotoImage(file=str(path))
-    except Exception:
-        return None
-    factor = 1
-    while image.height() // factor > max_height and factor < 8:
-        factor *= 2
-    return image.subsample(factor, factor) if factor > 1 else image
 
 
 def shorten(text: str, limit: int = 80) -> str:
@@ -1458,10 +1446,7 @@ class App:
         )
         other_row(
             self.t("support"),
-            [
-                (self.t("donate_alipay"), lambda: self.open_donation(dialog, "alipay")),
-                (self.t("donate_wechat"), lambda: self.open_donation(dialog, "wechat")),
-            ],
+            [(self.t("donate"), lambda: self.open_link(AFDIAN_URL))],
         )
         other_row(
             self.t("privacy"),
@@ -1542,106 +1527,6 @@ class App:
                 (self.t("about_credits"), UPSTREAM_URL),
             ),
         )
-
-    def open_donation(self, parent, method: str = "alipay") -> None:
-        """赞助页面：支付宝 / 微信 两种收款二维码。"""
-        c = self.theme
-        dialog = tk.Toplevel(parent)
-        dialog.title(self.t("donate_title"))
-        dialog.configure(bg=c["panel"])
-        dialog.transient(parent)
-        dialog.resizable(False, False)
-
-        wrap = tk.Frame(dialog, bg=c["panel"], padx=24, pady=18)
-        wrap.pack(fill="both", expand=True)
-
-        tab_row = tk.Frame(wrap, bg=c["panel"])
-        tab_row.pack(pady=(0, 12))
-        qr_label = tk.Label(wrap, bg=c["panel"], bd=0)
-        qr_label.pack()
-        hint = tk.Label(
-            wrap,
-            bg=c["panel"],
-            fg=c["muted"],
-            font=(FONT, 9),
-            justify="center",
-            wraplength=420,
-        )
-        hint.pack(pady=(12, 0))
-
-        limit = max(280, min(560, self.root.winfo_screenheight() - 360))
-        images = {
-            "alipay": load_qr(ASSETS_DIR / "alipay.png", limit),
-            "wechat": load_qr(ASSETS_DIR / "wechat.png", limit),
-        }
-        available = [key for key, image in images.items() if image is not None]
-        current = method if images.get(method) is not None else (available[0] if available else "alipay")
-        buttons = {}
-
-        def paint(key: str) -> None:
-            nonlocal current
-            current = key
-            for name, btn in buttons.items():
-                on = name == key
-                btn.config(
-                    bg=c["accent_soft"] if on else c["entry"],
-                    fg=c["accent"] if on else c["text"],
-                    highlightbackground=c["accent"] if on else c["border"],
-                )
-            image = images.get(key)
-            if image is None:
-                qr_label.config(image="", text=self.t("qr_missing"), fg=c["muted"], width=32, height=10)
-            else:
-                qr_label.config(image=image, text="")
-                qr_label.image = image
-            hint.config(text=self.t(f"donate_{key}_hint"))
-
-        for key in ("alipay", "wechat"):
-            btn = tk.Button(
-                tab_row,
-                text=self.t(f"donate_{key}"),
-                command=lambda k=key: paint(k),
-                bg=c["entry"],
-                fg=c["text"],
-                activebackground=c["card_hover"],
-                activeforeground=c["text"],
-                relief="flat",
-                bd=0,
-                highlightthickness=1,
-                highlightbackground=c["border"],
-                padx=18,
-                pady=6,
-                font=(FONT, 9),
-                cursor="hand2",
-            )
-            btn.pack(side="left", padx=(0, 8))
-            buttons[key] = btn
-
-        def close() -> None:
-            dialog.destroy()
-            try:
-                if parent.winfo_exists():
-                    parent.grab_set()
-            except tk.TclError:
-                pass
-
-        self._button(wrap, self.t("close"), close, "outline").pack(pady=(16, 0))
-        dialog.protocol("WM_DELETE_WINDOW", close)
-
-        paint(current)
-        dialog.update_idletasks()
-        sized = [image for image in images.values() if image is not None]
-        current_image = images.get(current)
-        extra = dialog.winfo_reqheight() - (current_image.height() if current_image else 0)
-        width = max(440, max((image.width() for image in sized), default=400) + 48)
-        height = extra + max((image.height() for image in sized), default=300)
-        x = parent.winfo_rootx() + max(0, (parent.winfo_width() - width) // 2)
-        y = parent.winfo_rooty() + max(0, (parent.winfo_height() - height) // 2)
-        x = min(max(0, x), max(0, self.root.winfo_screenwidth() - width - 16))
-        y = min(max(0, y), max(0, self.root.winfo_screenheight() - height - 56))
-        dialog.geometry(f"{width}x{height}+{x}+{y}")
-        dialog.grab_set()
-        dialog.after(80, lambda: self.apply_window_theme(dialog))
 
     def open_privacy(self, parent) -> None:
         self._show_info(parent, self.t("privacy"), self.t("privacy_text"))
